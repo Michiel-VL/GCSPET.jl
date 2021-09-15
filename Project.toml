@@ -1,7 +1,14 @@
-name = "."
+name = "GCSPET"
 uuid = "aa2bebe3-20f9-44dc-ba30-5cf3a5b89d1f"
 authors = ["Michiel Van Lancker <michiel.vanlancker@cs.kuleuven.be> and contributors"]
 version = "0.1.0"
+
+[deps]
+DataDeps = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+LightGraphs = "093fc24a-ae57-5d10-9952-331d41423f4d"
+Luxor = "ae8d54c2-7ccd-5906-9d76-62fc9837b5bc"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 julia = "1"
