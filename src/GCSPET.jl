@@ -29,6 +29,7 @@ module GCSPET
             Instance,           # Instance
             name,
             jobs,
+            cranes,
             crane_starting_pos,
             parameters,
             njobs,
@@ -48,6 +49,7 @@ module GCSPET
     include("model/instance.jl")
     include("model/solution.jl")
 
+    include("io/utilities.jl")
     include("io/dependencies.jl")
     include("io/io.jl")
     include("io/generator.jl")

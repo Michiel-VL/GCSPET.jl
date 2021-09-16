@@ -1,11 +1,11 @@
-# GCSPET
+# GCSPET.jl
 
-This package implements functionality for the Gantry Crane Scheduling Problem with External Trucks. Available are:
+This Julia package provides functionality for the Gantry Crane Scheduling Problem with External Trucks. Available functions are:
 
 - IO: reading in and writing out instances and solutions to the GCSPET
 - generation: create new instances using the original distributions, or using your own model.
 - validation: validate the correctness of a solution-file against an instance-file.
-- visualization: create and export visualizations to SVG, PNG, ... (functionality provided through [Luxor](https://github.com/JuliaGraphics/Luxor.jl)
+- visualization: create and export visualizations to SVG, PNG, ... (functionality provided through [Luxor](https://github.com/JuliaGraphics/Luxor.jl))
 
 
 # IO
@@ -19,10 +19,7 @@ julia> fpath = getinstance("GCSPET_Guo", "10_2_0.4_1.dat")
 "datadepsdir/GCSPET_Guo/SGCSPET_Instances/10_2_0.4_1.dat"
 
 julia> inst = GCSPET.read(fpath, Instance)
-Instance{Job, Int64}
-
-
-
+Instance("10_2_0.4_1.dat", Job)
 ```
 
 ## Generating instances

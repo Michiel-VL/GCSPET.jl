@@ -39,3 +39,13 @@ xmax(c, n, njobs, safety) = njobs - (n-c)*(safety+1)
 zone(c, ncranes, njobs, safety) = xmin(c, safety):xmax(c, ncranes, njobs, safety)
 
 
+function Base.show(io::IO, ::MIME"text/plain", i::Instance)
+    println(io, "Instance of GCSPET: $(name(i))")
+    println(io, "Jobs")
+    for j in jobs(i)
+        println(io, j)
+    end
+    for c in cranes(i)
+        println(io, c)
+    end
+end
