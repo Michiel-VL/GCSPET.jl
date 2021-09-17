@@ -2,7 +2,22 @@
 """
     VizData{C}
 
-Struct storing a configuration of the visualization parameters.
+Struct storing a configuration of the visualization parameters. Available parameters are:
+
+# Line styles (`::String`)
+- `trajdash`
+- `jobdash`
+- `safetydash`
+ 
+# Linewidths
+- `trajlinewidth::Float64`
+- `jobboxlinewidth::Float64`
+
+# Colors
+- `trajcolor::Vector{C}` (one color per crane)
+- `safetycolor::Vector{C}` (one color per crane)
+- `jobcolor::Matrix{C}` (2 by 2 matrix to visualize truck/train vs loading/unloading)
+
 """
 mutable struct VizData{C}
     trajdash::String
