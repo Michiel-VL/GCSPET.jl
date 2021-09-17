@@ -23,7 +23,8 @@ Instance("10_2_0.4_1.dat", Job)
 ```
 
 ## Generating instances
-A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in [Guo](https://www.tandfonline.com/doi/abs/10.1080/00207543.2018.1444812)
+A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in:
+[Peng Guo, Wenming Cheng, Yi Wang & Nils Boysen (2018) Gantry crane scheduling in intermodal rail-road container terminals, International Journal of Production Research, 56:16, 5419-5436, DOI: 10.1080/00207543.2018.1444812 ](https://www.tandfonline.com/doi/abs/10.1080/00207543.2018.1444812)
 
 ## File Formats
 ### Instance files
@@ -70,7 +71,7 @@ j,-1,5,5,37,37,18,18,27,27,9,9,13,13,39,39,14,14,17,17,33,33,26,26,31,31,16,16,1
 julia> using GCSPET
 
 julia> sol = GCSPET.read("42_2_0.8_2.sched", Solution)
-julia> draw(sol, 1000, 400, "example.png")
+julia> draw(sol, 1000, 800, "solution.png")
 ```
 
 ![Example of a solution](solution.png)

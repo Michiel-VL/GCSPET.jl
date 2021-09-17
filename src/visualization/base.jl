@@ -159,7 +159,7 @@ function prepare(w, h, xmax, ymax)
     
     b = BaseLayer(axislines)
     background(b.bgcolor)
-    fontsize(32)
+    fontsize(16)
     label("x", :NW, -yax[2])
     label("t", :SE, xax[2])
     
