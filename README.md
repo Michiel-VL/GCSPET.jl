@@ -42,7 +42,13 @@ GCSPET instance files carry the extension `.dat` and have the following format (
 ```
 
 ### Solution files
-GCSPET solution files carry the extension `.sched` and have the following format (comments not present in file): after a repetition of all of the instance data, the movements and execution of jobs through time are given for each crane. After the id is given, three vectors containing respectively the positional, temporal and job-ids are given.
+GCSPET solution files carry the extension `.sched` and have the following format (comments not present in file): 
+- repetition of all of the instance data (note: a line including the ids is added, to allow out-of-order data)
+- crane trajectories for each crane, each consisting of sequences for:
+    * id
+    * position along the x-axis (non-crossing axis)
+    * timestamp
+    * job-ids (-1  = no job)
 
 ```
 42
@@ -62,7 +68,6 @@ j,-1,12,12,21,21,24,24,20,20,23,23,8,8,34,34,38,38,19,19,29,29,30,30,36,36,32,32
 x,41,39,39,42,42,21,21,22,22,27,27,36,36,38,38,40,40,37,37,36,36,29,29,29,29,28,28,27,27,25,25,23,23,32,32,32,32,30,30,28,28,25,25
 t,0,2,8,11,16,37,44,45,55,60,67,76,85,87,93,95,100,103,112,113,123,130,135,135,140,141,147,148,157,159,168,170,178,187,194,194,199,201,209,211,218,221,224
 j,-1,5,5,37,37,18,18,27,27,9,9,13,13,39,39,14,14,17,17,33,33,26,26,31,31,16,16,11,11,10,10,41,41,28,28,0,0,1,1,4,4,2,2
-
 ```
 
 ## Visualization
