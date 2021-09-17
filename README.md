@@ -105,4 +105,6 @@ cfg.jobcolors = [RGBA(0.0,0.0,1.0,1.0) RGBA(0.4,0.4,1.0,1.0);
 GCSPET.draw(sol, 1000, 600, "solution2.svg", cfg)
 ```
 
+![Example of a solution as .svg](solution2.svg)
+
 ## Validation
