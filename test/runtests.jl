@@ -40,10 +40,16 @@ end
 
 s = randsolution(inst)
 
-
+GCSPET.read("40_")
 
 GCSPET.write(s, "solution.sched")
+
+GCSPET.draw(s, 1000, 600, "test.png")
+
 
 @testset "GCSPET.jl" begin
     @test GCSPET.makespan(s) > 0
 end
+
+
+

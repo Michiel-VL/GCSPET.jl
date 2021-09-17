@@ -1,5 +1,7 @@
  # Generate GCSPET instance according to Guo
 
+ import Distributions: DiscreteUniform
+
  """
  generate_location_constrained_jobs(njob, D_l, maxperl)
 Sample `njob` job locations from distribution D_l, with the constraint that at most `maxperl` jobs can occur at one location. Returns a jobs-per-location-dict of type `Dict{T,Vector{Int}}`, where `T` is the eltype of `D_l`.

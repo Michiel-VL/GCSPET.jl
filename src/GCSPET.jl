@@ -41,7 +41,7 @@ module GCSPET
     using LightGraphs
     using DataDeps
     using Luxor
-    using Distributions
+    using Colors
     using Test
 
     include("model/job.jl")
@@ -53,7 +53,7 @@ module GCSPET
     include("io/dependencies.jl")
     include("io/io.jl")
     include("io/generator.jl")
-    include("visualization/components.jl")
+    include("visualization/base.jl")
     include("visualization/schedule.jl")
 
     function __init__()

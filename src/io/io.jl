@@ -25,30 +25,33 @@ end
 
 Read a `solution` from a solution-file. The solution-file is typically stored in a file with the extension `.sched`. See the package-documentation for more information on the solution file-format.
 """
-function read(fpath::String, ::Type{Solution}; speed = 1, safety = 1)
-    if !endswith(".sched") 
+function read(fpath::String, ::Type{Solution}; speed = 1, safety = 1, zeroindexed = false)
+    if !endswith(fpath, ".sched") 
         @info "The provided file does not end with the typical `.sched`-extension. Are you sure this is a correct GCSPET-solution file? [Y/n]"
         lowercase(first(readline())) != "y" && return @info "No file read."
     end
     params, data, T = open(fpath, "r") do io
         params = readparams(io)
         data = readdata(io, 7)
+        lf = sum(data[6] / params.njobs)
         params = (params..., load = lf)
-        
-        T = Traj[]
+        zeroindexed && (data[2] = data[2] .+ 1)
+        T = Trajectory[]
         for _ in 1:params.ncranes
             id = parserl(Int, io)
+            zeroindexed && (id = id + 1)
             xvals = parsesrl(Int, io, headskip = 2)
             tvals = parsesrl(Int, io, headskip = 2)
             jvals = parsesrl(Int, io, headskip = 2)
-            push!(T, Traj(id, xvals, tvals, jvals))
+            zeroindexed && (jvals = map( x -> x == -1 ? x : x + 1, jvals))
+            push!(T, Trajectory(id, xvals, tvals, jvals))
         end
         return params, data, T
     end
     name = basename(fpath)
     Ω = create_jobs(data)
     Q = create_cranes(data, speed, safety)
-    return Solution(name, Ω, Q, T)
+    return Solution(name, sort!(Ω, by=id), Q, T)
 end
 
 
@@ -99,7 +102,7 @@ function write(solution::Solution, fpath, zeroindexed = false)
 end
 
 readparams(io) = NamedTuple{(:njobs, :ncranes)}(map( _ -> parserl(Int, io), 1:2))
-readdata(io, n=6) = map( _ -> parsesrl(Int, io), 1:n)
+readdata(io, n = 6) = map( _ -> parsesrl(Int, io), 1:n)
 
 function create_jobs(data)
     if size(data,1) == 6
