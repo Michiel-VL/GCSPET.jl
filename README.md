@@ -8,8 +8,8 @@ This Julia package provides functionality for the Gantry Crane Scheduling Proble
 - visualization: create and export visualizations to SVG, PNG, ... (functionality provided through [Luxor](https://github.com/JuliaGraphics/Luxor.jl))
 
 
-# IO
-## Reading and writing files
+## IO
+### Reading and writing files
 Use following functions to read and write instances and solutions.
 
 ```julia
@@ -22,12 +22,12 @@ julia> inst = GCSPET.read(fpath, Instance)
 Instance("10_2_0.4_1.dat", Job)
 ```
 
-## Generating instances
+### Generating instances
 A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in:
 [Peng Guo, Wenming Cheng, Yi Wang & Nils Boysen (2018) Gantry crane scheduling in intermodal rail-road container terminals, International Journal of Production Research, 56:16, 5419-5436, DOI: 10.1080/00207543.2018.1444812 ](https://www.tandfonline.com/doi/abs/10.1080/00207543.2018.1444812)
 
-## File Formats
-### Instance files
+### File Formats
+#### Instance files
 GCSPET instance files carry the extension `.dat` and have the following format (comments not present in file):
 
 ```
@@ -41,7 +41,7 @@ GCSPET instance files carry the extension `.dat` and have the following format (
 0,0,0,0,0,0,0,0,0,12            # arrival times
 ```
 
-### Solution files
+#### Solution files
 GCSPET solution files carry the extension `.sched` and have the following format (comments not present in file): 
 - repetition of all of the instance data (note: a line including the ids is added, to allow out-of-order data)
 - crane trajectories for each crane, each consisting of sequences for:
