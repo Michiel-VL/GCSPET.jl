@@ -65,3 +65,30 @@ function Base.show(io::IO, ::MIME"text/plain", v::Vector{Job})
         println(io, j)
     end
 end
+
+function Base.isless(j1::Job, j2::Job)
+    istruck(j1) && istrain(j2) && return true
+    istruck(j2) && istrain(j1) && return false
+    isunload(j1) && isload(j2) && return true
+    isunload(j2) && isload(j1) && return false
+end
+
+"""
+    precedes(j1::Job, j2::Job)
+
+Check if `j1` must precede `j2`. Use `≺` for short (infix) notation.
+"""
+function precedes(j1::Job, j2::Job)
+    loc(j1) != loc(j2) && return false
+    istruck(j1) && istrain(j2) && return true
+    istruck(j2) && istrain(j1) && return false
+    isunload(j1) && isload(j2) && return true
+    isunload(j2) && isload(j1) && return false
+end
+
+"""
+    ≺(j1, j2)
+
+Shorthand for `precedes(j1,j2)`
+"""
+≺(j1, j2) = precedes(j1, j2)

@@ -6,6 +6,7 @@ fname = getinstance("GCSPET_Guo", "20_2_0.4_1.dat")
 
 inst = GCSPET.read(fname, Instance)
 
+
 """
     randsolution(inst)
 
@@ -40,14 +41,10 @@ end
 
 s = randsolution(inst)
 
-GCSPET.read("40_")
-
-GCSPET.write(s, "solution.sched")
-
-GCSPET.draw(s, 1000, 600, "test.png")
-
-
 @testset "GCSPET.jl" begin
+    @test typeof(precedence_graph(jobs(inst))) <: SimpleDiGraph
+    @test typeof(precedence_matrix(jobs(inst))) <: Matrix
+    @test typeof(assignment_matrix(jobs(inst), cranes(inst))) <: Matrix
     @test GCSPET.makespan(s) > 0
 end
 

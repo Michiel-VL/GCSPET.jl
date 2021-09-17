@@ -83,4 +83,3 @@ julia> draw(sol, 1000, 800, "solution.png")
 
 
 ## Validation
-TODO
