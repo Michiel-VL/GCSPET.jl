@@ -90,6 +90,7 @@ j,-1,-1,5,5,2,2,4,4
 ```
 
 ## Visualization
+Solutions can be visualized with a one-liner, or, custom colorings can be used (see `VizData` source code for more info). 
 
 ```julia
 julia> using GCSPET
