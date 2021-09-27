@@ -15,12 +15,14 @@ Use following functions to read and write instances and solutions.
 ```julia
 using GCSPET
 
-julia> fpath = getinstance("GCSPET_Guo", "10_2_0.4_1.dat")
+julia> fpath = instancepath("GCSPET_Guo", "10_2_0.4_1.dat")
 "datadepsdir/GCSPET_Guo/SGCSPET_Instances/10_2_0.4_1.dat"
 
 julia> inst = GCSPET.read(fpath, Instance)
 Instance("10_2_0.4_1.dat", Job)
 ```
+
+Use `instancedir(key)` and `instancelist(key)` to respectively retrieve the instance directory and the list of all instances for a given key.
 
 ### Generating instances
 A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in:
