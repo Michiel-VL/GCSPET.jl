@@ -26,6 +26,15 @@ Instance("10_2_0.4_1.dat", Job)
 A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in:
 [Peng Guo, Wenming Cheng, Yi Wang & Nils Boysen (2018) Gantry crane scheduling in intermodal rail-road container terminals, International Journal of Production Research, 56:16, 5419-5436, DOI: 10.1080/00207543.2018.1444812 ](https://www.tandfonline.com/doi/abs/10.1080/00207543.2018.1444812)
 
+```julia
+njobs = 100
+ncranes = 4
+load = 0.5
+
+inst = generate_instance(njobs, ncranes, load)
+GCSPET.write(inst, "instance.dat")
+```
+
 ### File Formats
 #### Instance files
 GCSPET instance files carry the extension `.dat` and have the following format (comments not present in file):
