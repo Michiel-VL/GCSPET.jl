@@ -60,8 +60,8 @@ generate_jobs(njobs, ncranes, load) = map(Job, generate_jobdata(njobs, ncranes, 
 function generate_instance(njobs, ncranes, load; sample_id = 1, safety = 1, speed = 1)
     jobdata = generate_jobdata(njobs, ncranes, load)
     Ω = map(Job, jobdata...)
-    lQ = generate_crane_starting_positions(njobs, ncranes)
-    return Instance(name = toname(Ω, lQ), Ω = Ω, lQ = lQ, speed = speed, safety = safety)
+    Q = map(a -> Crane(a..., speed, zone(first(a), ncranes, njobs, safety), safety), Iterators.zip(1:ncranes, generate_crane_starting_positions(njobs, ncranes))
+    return Instance(toname(Ω, lQ), Ω, Q)
 end
 
 function encode_jobtypes!(MT, L, posjobmap)
