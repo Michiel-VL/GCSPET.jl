@@ -51,7 +51,7 @@ function generate_jobdata(njob, ncrane, load)
     encode_jobtypes!(MT, L, trainjobs)
     encode_jobtypes!(MT, L, truckjobs)
     ID = 1:njob
-    return (ID, L, JT, A, MT, P)
+    return (ID, L, A, P, JT, MT)
 end
 
 
