@@ -134,7 +134,7 @@ cfg.jobcolors = [RGBA(0.0,0.0,1.0,1.0) RGBA(0.4,0.4,1.0,1.0);
                 ]
 
 
-draw(inst, 1000, 800, "instance.png")
+draw(inst, 1000, 800, "instance.svg")
 ```
 
 ![Example of an instance](instance.svg)
