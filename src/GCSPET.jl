@@ -63,7 +63,6 @@ module GCSPET
     include("io/generator.jl")
     
     include("visualization/base.jl")
-    include("visualization/schedule.jl")
 
     function __init__()
         register(guo_instances)

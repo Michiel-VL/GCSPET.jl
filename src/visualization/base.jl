@@ -110,7 +110,7 @@ function trajjobs(s::Solution, i)
     map(i -> (tr.T[i], tr.J[i]), idxs[1:2:end])
 end
 
-function jobdata(s::Solution, i)
+function jobdata(s, i)
     j = jobs(s)[i]
     (id(j), loc(j), !jobtype(j)+1, t_processing(j), movetype(j)+1, t_arrival(j)) # bool to integer conversion for job- and movetypes
 end
@@ -246,3 +246,28 @@ end
 
 
 
+## Instance visualization
+
+function draw(inst::Instance, w, h, fname, cfg = VizData(ncranes(inst)); showarrival=false)
+    Drawing(w, h,fname)
+    jd, qd = instance_to_lb_solution(inst)
+    # Prepare environment
+    _xm, idx = findmax(first.(jd))
+    xm = _xm + t_processing(jobs(inst)[last(jd[idx])]) + 1
+    ym = njobs(inst) + 1
+
+    prepare(w, h, xm, ym)
+    # Configure background
+    
+
+    # Draw trajectories and jobs
+    for i in 1:ncranes(inst)
+        setcolor(cfg.trajcolor[i])
+        box(Point(qd[i]...), 1, 1, :fill)
+        for (t, id) in jd
+            drawjob(jobdata(inst, id), t, cfg, showarrival = showarrival)
+        end
+    end
+    finish()
+    preview()
+end

@@ -90,16 +90,19 @@ j,-1,-1,5,5,2,2,4,4
 ```
 
 ## Visualization
-Solutions can be visualized with a one-liner, or, custom colorings can be used (see `VizData` source code for more info). 
+Instances and solutions can be visualized with a one-liner, or, custom colorings can be used (see `VizData` source code for more info). 
 
 ```julia
-julia> using GCSPET
+using GCSPET
 
-julia> sol = GCSPET.read("10_4_0.5_3.sched", Solution)
-julia> draw(sol, 1000, 800, "solution.png")
+sol = GCSPET.read("10_4_0.5_3.sched", Solution)
+draw(sol, 1000, 800, "solution.png")
 ```
 
 ![Example of a solution](solution.png)
+
+
+
 
 
 
@@ -118,5 +121,22 @@ GCSPET.draw(sol, 1000, 600, "solution2.svg", cfg)
 ```
 
 ![Example of a solution as .svg](solution2.svg)
+
+```julia
+using GCSPET, Colors
+
+inst = GCSPET.read("100_6_0.5_1.dat", Instance)
+
+cfg = GCSPET.VizData(6)
+
+cfg.jobcolors = [RGBA(0.0,0.0,1.0,1.0) RGBA(0.4,0.4,1.0,1.0);
+                 RGBA(0.0,1.0,0.0,1.0) RGBA(0.6,1.0,0.6,1.0)
+                ]
+
+
+draw(inst, 1000, 800, "instance.png")
+```
+
+![Example of an instance](instance.svg)
 
 ## Validation

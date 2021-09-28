@@ -2,10 +2,11 @@ using GCSPET
 using Test
 
 
-fname = getinstance("GCSPET_Guo", "20_2_0.4_1.dat")
+fname = instancepath("GCSPET_Guo", "20_2_0.4_1.dat")
 
 inst = GCSPET.read(fname, Instance)
 
+GCSPET.draw(inst, 1000, 800, "test.png")
 
 """
     randsolution(inst)

@@ -32,3 +32,54 @@ assignment_matrix(jobs, cranes) = map( x -> loc(x[1]) ∈ zone(x[2]), Iterators.
 Perform a pairwise comparison of `property` on the `jobs`.
 """
 compare(jobs, property) = map(J -> property(J...), Iterators.product(jobs, jobs))
+
+
+
+function instance_to_lb_solution(instance)
+    Ω = jobs(instance)
+    Q = cranes(instance)
+    L = jobs_by_loc(Ω)    
+    jd = _jobdata(L)
+    qd = _cranedata(Q)
+    @show jd
+    @show qd
+    return jd, qd
+end
+
+function jobs_by_loc(jobs)
+    pg = precedence_graph(jobs)
+    L = [Job[] for _ in 1:length(jobs)]
+    for v in topological_sort_by_dfs(pg)
+        j = jobs[v]
+        push!(L[loc(j)], j)
+    end
+    return L
+end
+
+function _jobdata(L)
+    jd = Tuple{Int,Int}[]
+    for l in L
+        t = 0
+        for j in l
+            ts = max(t, t_arrival(j))
+            push!(jd, (ts,id(j)))
+            t = ts + t_processing(j)
+        end
+    end
+    return jd
+end
+
+_cranedata(Q) = map(q -> (0,starting_position(q)), Q)
+
+
+function lb_obj(jobs, jd)
+    cmax = maximum(j -> first(j) + t_processing(jobs[last(j)]), jd)
+    twt = 0
+    for (ts, jid) in jd
+        j = jobs[jid]
+        if istruck(j)
+            twt += t_processing(j) + ts - t_arrival(j)
+        end
+    end
+    return cmax, twt
+end
