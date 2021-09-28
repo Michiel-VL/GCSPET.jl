@@ -95,8 +95,8 @@ Instances and solutions can be visualized with a one-liner, or, custom colorings
 ```julia
 using GCSPET
 
-sol = GCSPET.read("10_4_0.5_3.sched", Solution)
-draw(sol, 1000, 800, "solution.png")
+julia> sol = GCSPET.read("10_4_0.5_3.sched", Solution)
+julia> GCSPET.draw(sol, 1000, 800, "solution.png")
 ```
 
 ![Example of a solution](solution.png)

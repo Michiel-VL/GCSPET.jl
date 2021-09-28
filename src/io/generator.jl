@@ -43,7 +43,7 @@ function generate_jobdata(njob, ncrane, load)
     Dₐ = DiscreteUniform(1, sum(P) ÷ ncrane)                        # Generate arrival times
     A = vcat(zeros(Int, ntrain), rand(Dₐ, ntruck))
     Dₗ = DiscreteUniform(1,njob)                                    # Generate locations
-    JT = vcat(zeros(Int, ntrain), ones(Int, ntruck))
+    JT = vcat(ones(Int, ntrain), zeros(Int, ntruck))
     trainjobs = generate_location_constrained_jobs(ntrain, Dₗ, 2)
     truckjobs = generate_location_constrained_jobs(ntruck, Dₗ, 2; base_id = ntrain+1)
     L = zeros(Int, njob)
