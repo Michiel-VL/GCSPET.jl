@@ -1,3 +1,5 @@
+read(iset, iname; speed = 1, safety = 1) = read(instancepath(iset, iname), Instance; speed = speed, safety = safety)
+
 """
     GCSPET.read(source, ::Type{Instance})
     

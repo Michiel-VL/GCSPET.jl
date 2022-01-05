@@ -55,6 +55,7 @@ module GCSPET
     include("model/crane.jl")
     include("model/instance.jl")
     include("model/solution.jl")
+    include("model/bounds.jl")
     include("model/utilities.jl")
 
     include("io/utilities.jl")
