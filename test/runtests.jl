@@ -7,7 +7,7 @@ fname = instancepath("GCSPET_Guo", "20_2_0.4_1.dat")
 inst = GCSPET.read(fname, Instance)
 
 GCSPET.draw(inst, 1000, 800, "test.png")
-
+GCSPET.draw(Instance, fname, 1000, 800, "test2.png")
 """
     randsolution(inst)
 

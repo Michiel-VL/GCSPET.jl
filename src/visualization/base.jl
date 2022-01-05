@@ -116,6 +116,16 @@ function jobdata(s, i)
 end
 
 ## 
+
+function draw(T, file::String, w, h, fname; cfg = nothing, showarrival = false)
+    s = read(file, T)
+    if isnothing(cfg)
+        draw(s, w, h, fname; showarrival = showarrival)
+    else
+        draw(s, w, h, cfg; showarrival = showarrival)
+    end
+end
+
 function draw(sol::Solution, w, h, fname, cfg = VizData(ncranes(sol)); showarrival=false)
     Drawing(w, h,fname)
     # Prepare environment
@@ -271,3 +281,4 @@ function draw(inst::Instance, w, h, fname, cfg = VizData(ncranes(inst)); showarr
     finish()
     preview()
 end
+
