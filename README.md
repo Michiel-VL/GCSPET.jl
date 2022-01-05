@@ -25,8 +25,8 @@ Instance("10_2_0.4_1.dat", Job)
 Use `instancedir(key)` and `instancelist(key)` to respectively retrieve the instance directory and the list of all instances for a given key.
 
 ### Generating instances
-A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in:
-[Peng Guo, Wenming Cheng, Yi Wang & Nils Boysen (2018) Gantry crane scheduling in intermodal rail-road container terminals, International Journal of Production Research, 56:16, 5419-5436, DOI: 10.1080/00207543.2018.1444812 ](https://www.tandfonline.com/doi/abs/10.1080/00207543.2018.1444812)
+A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in [1]:
+
 
 ```julia
 njobs = 100
@@ -140,3 +140,8 @@ draw(inst, 1000, 800, "instance.svg")
 ![Example of an instance](instance.svg)
 
 ## Validation
+
+
+## References
+
+[1]: [Peng Guo, Wenming Cheng, Yi Wang & Nils Boysen (2018) Gantry crane scheduling in intermodal rail-road container terminals, International Journal of Production Research, 56:16, 5419-5436, DOI: 10.1080/00207543.2018.1444812 ](https://www.tandfonline.com/doi/abs/10.1080/00207543.2018.1444812)

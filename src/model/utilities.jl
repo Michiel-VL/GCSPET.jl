@@ -46,6 +46,11 @@ function instance_to_lb_solution(instance)
     return jd, qd
 end
 
+"""
+    jobs_by_loc(jobs)
+
+Returns a vector of vectors of jobs, with on each index `i` in the top vector the _ordered_ list of jobs on location `i`
+"""
 function jobs_by_loc(jobs)
     pg = precedence_graph(jobs)
     L = [Job[] for _ in 1:length(jobs)]
@@ -54,6 +59,21 @@ function jobs_by_loc(jobs)
         push!(L[loc(j)], j)
     end
     return L
+end
+
+
+"""
+    loctojobdict
+"""
+function loctojobdict(jobs)
+    L = jobs_by_loc(jobs)
+    D = Dict{Int, Vector{Job}}()
+    for (l,jobs) in enumerate(L)
+        if !isempty(jobs)
+            D[l] = jobs
+        end
+    end
+    return D
 end
 
 function _jobdata(L)
