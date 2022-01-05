@@ -99,7 +99,7 @@ julia> sol = GCSPET.read("10_4_0.5_3.sched", Solution)
 julia> GCSPET.draw(sol, 1000, 800, "solution.png")
 ```
 
-![Example of a solution](solution.png)
+![Example of a solution](assets/figs/solution.png)
 
 
 
@@ -120,7 +120,7 @@ cfg.jobcolors = [RGBA(0.0,0.0,1.0,1.0) RGBA(0.4,0.4,1.0,1.0);
 GCSPET.draw(sol, 1000, 600, "solution2.svg", cfg)
 ```
 
-![Example of a solution as .svg](solution2.svg)
+![Example of a solution as .svg](assets/figs/solution2.svg)
 
 ```julia
 using GCSPET, Colors
@@ -137,7 +137,7 @@ cfg.jobcolors = [RGBA(0.0,0.0,1.0,1.0) RGBA(0.4,0.4,1.0,1.0);
 draw(inst, 1000, 800, "instance.svg")
 ```
 
-![Example of an instance](instance.svg)
+![Example of an instance](assets/figs/instance.svg)
 
 ## Validation
 
