@@ -1,7 +1,31 @@
 export LB1, LB2, LB3, LB4, LB5, LB6
 
 
+"""
+    compute_bound(LB, fpath)
 
+Compute bound `LB` for the instance-file fpath
+"""
+function compute_bound(LB, fpath)
+    i = read(fpath, Instance)
+    return LB(i)
+end
+
+
+"""
+    compute_bounds(boundset, fpath)
+
+Computes the bounds in `boundset` for the instance-file `fpath` and returns a dictionary with `boundname => value` pairs.
+"""
+function compute_bounds(boundset, fpath)
+    i = read(fpath, Instance)
+    d = Dict{String, Int}()
+    for lb in boundset
+        v = lb(i)
+        d[string(lb)] = v
+    end
+    return d
+end
 
 
 """
@@ -15,6 +39,7 @@ LB1(jobs) = sum(t_processing, Iterators.filter(istruck, jobs))
 
 LB1(i::Instance) = LB1(jobs(i))
 
+LB1(i::String) = LB1(read(Instance,i)
 
 """
     LB2(jobs)
