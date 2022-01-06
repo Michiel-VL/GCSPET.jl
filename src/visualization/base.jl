@@ -122,7 +122,7 @@ function draw(T, file::String, w, h, fname; cfg = nothing, showarrival = false)
     if isnothing(cfg)
         draw(s, w, h, fname; showarrival = showarrival)
     else
-        draw(s, w, h, cfg; showarrival = showarrival)
+        draw(s, w, h, fname, cfg; showarrival = showarrival)
     end
 end
 
