@@ -3,6 +3,20 @@ struct Job
 
 Struct representing a single job in the GCSPET. Consists of a transshipment to be executed on a particular location on the non-crossing axis of the gantry cranes. A job takes `t_processing` time units and can only be started as soon as `t_arrival`. Each job has a `jobtype` and `movetype`, which determine precedences between jobs and contribution to the objective function.
 
+# Functionality (not exported)
+- id(j)
+- loc(j)
+- t_arrival(j)
+- t_processing(j)
+- jobtype(j)
+- movetype(j)
+- istruck(j)
+- istrain(j)
+- isunload(j)
+- isload(j)
+- t_waiting(j)
+- t_truckwaiting(j)
+- precedes(j1, j2)
 """
 struct Job
 id::Int
