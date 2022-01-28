@@ -39,7 +39,6 @@ LB1(jobs) = sum(t_processing, Iterators.filter(istruck, jobs))
 
 LB1(i::Instance) = LB1(jobs(i))
 
-LB1(i::String) = LB1(read(Instance,i)
 
 """
     LB2(jobs)
