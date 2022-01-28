@@ -103,3 +103,18 @@ function lb_obj(jobs, jd)
     end
     return cmax, twt
 end
+    
+"""
+    assignment_ranges(Ω, Q)
+
+Return a vector of ranges designating which craens can be assigned to each job.
+"""
+function assignment_ranges(Ω, Q)
+    R = UnitRange{Int}[]
+    for j in Ω
+        cmin = findfirst( c -> loc(j) ∈ zone(c), Q)
+        cmax = findlast( c -> loc(j) ∈ zone(c), Q)
+        push!(R, cmin:cmax)
+    end
+    return R
+end
