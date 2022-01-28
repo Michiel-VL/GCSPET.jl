@@ -2,7 +2,7 @@
     struct Trajectory
 
 Representation of a single crane trajectory as part of as solution to the GCSPET. The crane movements are modeled as a sequence of crane-positions through time. 
-Positions relevant to the execution of a job are marked with the idea of that particular job. Each job-id thus occurs twice: once for the starting point of the job and once more for finishing.
+Positions relevant to the execution of a job are marked with the id of that particular job. Each job-id thus occurs twice: once for the starting point of the job and once more for finishing.
 """
 struct Trajectory
     id::Int
