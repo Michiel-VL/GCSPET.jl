@@ -23,7 +23,7 @@ function read(fpath, ::Type{Instance}; speed = 1, safety = 1)
 end
 
 """
-    GCSPET.read(fpath, ::Type{Solution})
+    GCSPET.read(fpath, ::Type{Solution}; speed = 1, safety = 1, zeroindexed = false)
 
 Read a `solution` from a solution-file. The solution-file is typically stored in a file with the extension `.sched`. See the package-documentation for more information on the solution file-format.
 """

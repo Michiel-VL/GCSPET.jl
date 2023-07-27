@@ -27,6 +27,26 @@ jt::Bool  # 0 = truck
 mt::Bool  # 0 = unload
 end
 
+function namestr(j)
+    str = j.jt == 0 ? "V" : "T"
+    str = j.mt == 0 ? str * "U" : str * "L"
+    str = "J" * string(id(j)) * "-" * str
+    return str
+end
+
+
+function latexnamestr(j)
+    str = j.jt == 0 ? "V" : "T"
+    str = j.mt == 0 ? str * "U" : str * "L"
+    str = str * "_{"*string(id(j))*"}"
+    return str
+end
+
+function Base.show(io::IO, j::Job)
+    print(io, "$(namestr(j)):")
+    print(io, join((j.l, j.a, j.p),","))
+end
+
 id(j::Job) = j.id
 loc(j::Job) = j.l
 t_arrival(j::Job) = j.a
@@ -54,7 +74,9 @@ Compute the time the (potential) truck related to Job `j` spent waiting in the t
 """
 t_truckwaiting(j::Job, t_compl) = istruck(j) * (t_compl - t_arrival(j))
 
+t_truckwaitingtostart(j::Job, t_compl) = istruck(j) * (t_truckwaiting(j, t_compl) - t_processing(j))
 
+#=
 function Base.show(io::IO, ::MIME"text/plain", j::Job)
     if istruck(j)
         a = 'V'
@@ -78,7 +100,7 @@ function Base.show(io::IO, ::MIME"text/plain", v::Vector{Job})
     for j in v
         println(io, j)
     end
-end
+end =#
 
 function Base.isless(j1::Job, j2::Job)
     istruck(j1) && istrain(j2) && return true

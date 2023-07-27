@@ -70,9 +70,9 @@ Calculate a lower bound on the makespan:
 # TODO: Implement bound
 """
 
-LB4(jobs, l0) = LB3 + minimaltravel(jobs, l0)
+LB4(ncranes, jobs, l0) = LB3(jobs, ncranes) + minimaltravel(jobs, l0)
 
-LB4(i::Instance) = LB4(jobs(i), crane_starting_pos(i))
+LB4(i::Instance) = LB4(ncranes(i), jobs(i), crane_starting_pos(i))
 
 """
     LB5(jobs)
@@ -142,3 +142,12 @@ end
 
 makespan_bound_functions = [LB2, LB3, LB4, LB6]
 t_truckwaiting_bound_functions = [LB1, LB5]
+
+
+function getbounds(inst)
+    b1 = maximum(compute_earliest_completion_times(jobs(inst)))
+    b2 = ceil(sum(t_processing.(jobs(inst)))\ncranes(inst))
+    bcmax = max(b1,b2)
+    btwt = LB5(inst)
+    bcmax, btwt
+end
