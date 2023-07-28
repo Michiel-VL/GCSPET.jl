@@ -1,73 +1,147 @@
-# GCSPET
+# GCSPET.jl
 
-This package implements functionality for the Gantry Crane Scheduling Problem with External Trucks. Available are:
+This Julia package provides functionality for the Gantry Crane Scheduling Problem with External Trucks. Available functions are:
 
 - IO: reading in and writing out instances and solutions to the GCSPET
 - generation: create new instances using the original distributions, or using your own model.
-- validation: validate the correctness of a solution-file against an instance-file.
-- visualization: create and export visualizations to SVG, PNG, ... (functionality provided through [Luxor](https://github.com/JuliaGraphics/Luxor.jl)
+- validation: validate the correctness of a solution-file against an instance-file. **[in progress]**
+- visualization: create and export visualizations
 
 
-# IO
-## Reading and writing files
+## IO
+### Reading and writing files
 Use following functions to read and write instances and solutions.
 
 ```julia
 using GCSPET
 
-julia> fpath = getinstance("GCSPET_Guo", "10_2_0.4_1.dat")
+julia> fpath = instancepath("GCSPET_Guo", "10_2_0.4_1.dat")
 "datadepsdir/GCSPET_Guo/SGCSPET_Instances/10_2_0.4_1.dat"
 
 julia> inst = GCSPET.read(fpath, Instance)
-Instance{Job, Int64}
-
-
-
+Instance("10_2_0.4_1.dat", Job)
 ```
 
-## Generating instances
-A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in [Guo](https://www.tandfonline.com/doi/abs/10.1080/00207543.2018.1444812)
+Use `instancedir(key)` and `instancelist(key)` to respectively retrieve the instance directory and the list of all instances for a given key.
 
-## File Formats
-### Instance files
+### Generating instances
+A simple script is provided to generate instances from a parameter-grid, using the original distributions as presented in [1]:
+
+
+```julia
+njobs = 100
+ncranes = 4
+load = 0.5
+
+inst = generate_instance(njobs, ncranes, load)
+GCSPET.write(inst, "instance.dat")
+```
+
+### File Formats
+#### Instance files
 GCSPET instance files carry the extension `.dat` and have the following format (comments not present in file):
 
 ```
 10                              # number of jobs (njobs)
-2                               # number of cranes (ncranes)
-1,6                             # crane starting positions along non-crossing axis
-2,3,7,5,4,9,6,6,10,3            # job positions along non-crossing axis
-1,1,1,1,1,1,1,1,1,2             # job types (1 = train, 2 = truck)
-8,9,5,8,8,4,3,6,10,5            # processing times
-2,2,1,2,1,1,2,1,2,1             # move types (1 = unloading 2 = loading)
-0,0,0,0,0,0,0,0,0,12            # arrival times
+4                               # number of cranes (ncranes)
+2,4,6,8                         # crane starting positions along non-crossing axis
+1,1,3,4,4,5,7,9,9,9             # job positions along non-crossing axis
+2,1,1,2,2,1,2,2,1,1             # job types (1 = train, 2 = truck)
+10,7,7,8,4,7,10,7,4,7           # processing times
+1,1,1,1,2,1,1,1,1,2             # move types (1 = unloading 2 = loading)
+15,0,0,3,7,0,14,2,0,0           # arrival times
 ```
 
-### Solution files
-GCSPET solution files carry the extension `.sched` and have the following format (comments not present in file): after a repetition of all of the instance data, the movements and execution of jobs through time are given for each crane. After the id is given, three vectors containing respectively the positional, temporal and job-ids are given.
+#### Solution files
+GCSPET solution files carry the extension `.sched` and have the following format (comments not present in file): 
+- repetition of all of the instance data (note: a line including the ids is added, to allow out-of-order data)
+- crane trajectories for each crane, each consisting of sequences for:
+    * id
+    * position along the x-axis (non-crossing axis)
+    * timestamp
+    * job-ids (-1  = no job)
 
 ```
-10                              # number of jobs (njobs)
-2                               # number of cranes (ncranes)
-1,6                             # crane starting positions along non-crossing axis
-2,3,7,5,4,9,6,6,10,3            # job positions along non-crossing axis
-1,1,1,1,1,1,1,1,1,2             # job types (1 = train, 2 = truck)
-8,9,5,8,8,4,3,6,10,5            # processing times
-2,2,1,2,1,1,2,1,2,1             # move types (1 = unloading 2 = loading)
-0,0,0,0,0,0,0,0,0,12            # arrival times
-1                               # crane id
-x,                              # crane positions throughout the schedule
-t,                              # time at position x
-j,                              # job at time t ( j = -1 if none, j = id if any. Every id occurs twice, for start and stop)
-2                               # repeat for all cranes
-x,
-t,
-j,
+10
+4
+2,4,6,8
+9,3,0,7,8,1,6,5,2,4
+1,1,3,4,4,5,7,9,9,9
+2,1,1,2,2,1,2,2,1,1
+10,7,7,8,4,7,10,7,4,7
+1,1,1,1,2,1,1,1,1,2
+15,0,0,3,7,0,14,2,0,0
+0
+x,2,1,1,1,1,1
+t,0,1,15,25,25,32
+j,-1,-1,9,9,3,3
+1
+x,4,4,4,4,4,4,5,5,3,3
+t,0,0,3,11,11,15,16,23,25,32
+j,-1,-1,7,7,8,8,1,1,0,0
+2
+x,6,7,7,7
+t,0,1,14,24
+j,-1,-1,6,6
+3
+x,8,9,9,9,9,9,9,9
+t,0,1,2,9,9,13,13,20
+j,-1,-1,5,5,2,2,4,4
 ```
-
-
-## Validation
-TODO
 
 ## Visualization
-TODO
+Instances and solutions can be visualized with a one-liner, or, custom colorings can be used (see `VizData` source code for more info). 
+
+```julia
+using GCSPET
+
+julia> sol = GCSPET.read("10_4_0.5_3.sched", Solution)
+julia> GCSPET.draw(sol, 1000, 800, "solution.png")
+```
+
+![Example of a solution](assets/figs/solution.png)
+
+
+
+
+
+
+```julia
+using GCSPET, Colors
+
+sol = GCSPET.read("80_6_0.5_2.sched")
+
+cfg = GCSPET.VizData(6)
+
+cfg.jobcolors = [RGBA(0.0,0.0,1.0,1.0) RGBA(0.4,0.4,1.0,1.0);
+                 RGBA(0.0,1.0,0.0,1.0) RGBA(0.6,1.0,0.6,1.0)
+                ]
+
+GCSPET.draw(sol, 1000, 600, "solution2.svg", cfg)
+```
+
+![Example of a solution as .svg](assets/figs/solution2.svg)
+
+```julia
+using GCSPET, Colors
+
+inst = GCSPET.read("100_6_0.5_1.dat", Instance)
+
+cfg = GCSPET.VizData(6)
+
+cfg.jobcolors = [RGBA(0.0,0.0,1.0,1.0) RGBA(0.4,0.4,1.0,1.0);
+                 RGBA(0.0,1.0,0.0,1.0) RGBA(0.6,1.0,0.6,1.0)
+                ]
+
+
+draw(inst, 1000, 800, "instance.svg")
+```
+
+![Example of an instance](assets/figs/instance.svg)
+
+## Validation
+
+
+## References
+
+[1]: [Peng Guo, Wenming Cheng, Yi Wang & Nils Boysen (2018) Gantry crane scheduling in intermodal rail-road container terminals, International Journal of Production Research, 56:16, 5419-5436, DOI: 10.1080/00207543.2018.1444812 ](https://www.tandfonline.com/doi/abs/10.1080/00207543.2018.1444812)

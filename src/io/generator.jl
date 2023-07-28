@@ -1,5 +1,7 @@
  # Generate GCSPET instance according to Guo
 
+ import Distributions: DiscreteUniform
+
  """
  generate_location_constrained_jobs(njob, D_l, maxperl)
 Sample `njob` job locations from distribution D_l, with the constraint that at most `maxperl` jobs can occur at one location. Returns a jobs-per-location-dict of type `Dict{T,Vector{Int}}`, where `T` is the eltype of `D_l`.
@@ -41,7 +43,7 @@ function generate_jobdata(njob, ncrane, load)
     Dₐ = DiscreteUniform(1, sum(P) ÷ ncrane)                        # Generate arrival times
     A = vcat(zeros(Int, ntrain), rand(Dₐ, ntruck))
     Dₗ = DiscreteUniform(1,njob)                                    # Generate locations
-    JT = vcat(zeros(Int, ntrain), ones(Int, ntruck))
+    JT = vcat(ones(Int, ntrain), zeros(Int, ntruck))
     trainjobs = generate_location_constrained_jobs(ntrain, Dₗ, 2)
     truckjobs = generate_location_constrained_jobs(ntruck, Dₗ, 2; base_id = ntrain+1)
     L = zeros(Int, njob)
@@ -49,7 +51,7 @@ function generate_jobdata(njob, ncrane, load)
     encode_jobtypes!(MT, L, trainjobs)
     encode_jobtypes!(MT, L, truckjobs)
     ID = 1:njob
-    return (ID, L, JT, A, MT, P)
+    return (ID, L, A, P, JT, MT)
 end
 
 
@@ -59,7 +61,8 @@ function generate_instance(njobs, ncranes, load; sample_id = 1, safety = 1, spee
     jobdata = generate_jobdata(njobs, ncranes, load)
     Ω = map(Job, jobdata...)
     lQ = generate_crane_starting_positions(njobs, ncranes)
-    return Instance(name = toname(Ω, lQ), Ω = Ω, lQ = lQ, speed = speed, safety = safety)
+    Q = map(a -> Crane(a..., speed, zone(first(a), ncranes, njobs, safety), safety), Iterators.zip(1:ncranes, lQ))
+    return Instance(toname(Ω, lQ, s_id = sample_id), Ω, Q)
 end
 
 function encode_jobtypes!(MT, L, posjobmap)

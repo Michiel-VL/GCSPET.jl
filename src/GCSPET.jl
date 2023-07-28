@@ -29,30 +29,42 @@ module GCSPET
             Instance,           # Instance
             name,
             jobs,
+            cranes,
             crane_starting_pos,
             parameters,
             njobs,
             ncranes,
             loadfactor,
-            getinstance,
-            generate_instance
+            instancepath,
+            instancelist,
+            instancedir,
+            generate_instance,
+            precedence_graph,
+            precedence_matrix,
+            assignment_matrix,
+            assignment_ranges
 
-    using LightGraphs
-    using DataDeps
-    using Luxor
-    using Distributions
-    using Test
+    using Reexport
+    using SplitApplyCombine: group # model
+    @reexport using LightGraphs       # model
+    using DataDeps          # io
+    using Luxor             # visualization
+    using Colors            # visualization
+    using Test              # validation
 
     include("model/job.jl")
     include("model/crane.jl")
     include("model/instance.jl")
     include("model/solution.jl")
+    include("model/bounds.jl")
+    include("model/utilities.jl")
 
+    include("io/utilities.jl")
     include("io/dependencies.jl")
     include("io/io.jl")
     include("io/generator.jl")
-    include("visualization/components.jl")
-    include("visualization/schedule.jl")
+    
+    include("visualization/base.jl")
 
     function __init__()
         register(guo_instances)
