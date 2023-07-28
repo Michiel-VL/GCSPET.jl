@@ -142,5 +142,5 @@ function assignment_ranges(Ω, Q)
         cmax = findlast( c -> loc(j) ∈ zone(c), Q)
         push!(R, cmin:cmax)
     end
-    return RDev
+    return R
 end
