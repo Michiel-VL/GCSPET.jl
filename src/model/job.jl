@@ -3,6 +3,20 @@ struct Job
 
 Struct representing a single job in the GCSPET. Consists of a transshipment to be executed on a particular location on the non-crossing axis of the gantry cranes. A job takes `t_processing` time units and can only be started as soon as `t_arrival`. Each job has a `jobtype` and `movetype`, which determine precedences between jobs and contribution to the objective function.
 
+# Functionality (not exported)
+- id(j)
+- loc(j)
+- t_arrival(j)
+- t_processing(j)
+- jobtype(j)
+- movetype(j)
+- istruck(j)
+- istrain(j)
+- isunload(j)
+- isload(j)
+- t_waiting(j)
+- t_truckwaiting(j)
+- precedes(j1, j2)
 """
 struct Job
 id::Int
@@ -65,3 +79,30 @@ function Base.show(io::IO, ::MIME"text/plain", v::Vector{Job})
         println(io, j)
     end
 end
+
+function Base.isless(j1::Job, j2::Job)
+    istruck(j1) && istrain(j2) && return true
+    istruck(j2) && istrain(j1) && return false
+    isunload(j1) && isload(j2) && return true
+    isunload(j2) && isload(j1) && return false
+end
+
+"""
+    precedes(j1::Job, j2::Job)
+
+Check if `j1` must precede `j2`. Use `≺` for short (infix) notation.
+"""
+function precedes(j1::Job, j2::Job)
+    loc(j1) != loc(j2) && return false
+    istruck(j1) && istrain(j2) && return true
+    istruck(j2) && istrain(j1) && return false
+    isunload(j1) && isload(j2) && return true
+    isunload(j2) && isload(j1) && return false
+end
+
+"""
+    ≺(j1, j2)
+
+Shorthand for `precedes(j1,j2)`
+"""
+≺(j1, j2) = precedes(j1, j2)
