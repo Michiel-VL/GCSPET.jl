@@ -23,6 +23,7 @@ Colors = "0.12"
 Distributions = "0.25"
 DataDeps = "0.7"
 Reexport = "1"
+SplitApplyCombine = "1"
 julia = "1"
 
 [extras]
