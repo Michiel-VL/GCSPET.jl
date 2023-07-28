@@ -108,8 +108,8 @@ function lb_obj(jobs, jd)
     end
     return cmax, twt
 end
-
-
+    
+    
 function earliest_start_times(jobs)
     D = loctojobdict(jobs)
     t_start = zeros(Int,length(jobs))
@@ -127,4 +127,20 @@ function earliest_start_times(jobs)
         
     end
     return t_start
+end
+
+    
+"""
+    assignment_ranges(Ω, Q)
+
+Return a vector of ranges designating which craens can be assigned to each job.
+"""
+function assignment_ranges(Ω, Q)
+    R = UnitRange{Int}[]
+    for j in Ω
+        cmin = findfirst( c -> loc(j) ∈ zone(c), Q)
+        cmax = findlast( c -> loc(j) ∈ zone(c), Q)
+        push!(R, cmin:cmax)
+    end
+    return RDev
 end

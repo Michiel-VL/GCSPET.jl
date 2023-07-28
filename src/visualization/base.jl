@@ -227,7 +227,7 @@ function drawtrajectory(pts, safety, cid, cfg)
     setcolor(cfg.safetycolor[cid])
     setline(cfg.safetylinewidth)
     setdash(cfg.safetydash)
-    poly(vcat(ptop, reverse(ptop)), :fill)
+    !isempty(ptop) && poly(vcat(ptop, reverse(ptop)), :fill)
 
     n = length(ptop)
 

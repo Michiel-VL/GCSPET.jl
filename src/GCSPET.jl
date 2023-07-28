@@ -41,7 +41,8 @@ module GCSPET
             generate_instance,
             precedence_graph,
             precedence_matrix,
-            assignment_matrix
+            assignment_matrix,
+            assignment_ranges
 
     using Reexport
     using SplitApplyCombine: group # model
