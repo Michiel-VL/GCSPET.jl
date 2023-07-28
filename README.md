@@ -4,8 +4,8 @@ This Julia package provides functionality for the Gantry Crane Scheduling Proble
 
 - IO: reading in and writing out instances and solutions to the GCSPET
 - generation: create new instances using the original distributions, or using your own model.
-- validation: validate the correctness of a solution-file against an instance-file.
-- visualization: create and export visualizations to SVG, PNG,...
+- validation: validate the correctness of a solution-file against an instance-file. **[in progress]**
+- visualization: create and export visualizations
 
 
 ## IO

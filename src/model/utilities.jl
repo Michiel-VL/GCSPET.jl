@@ -34,12 +34,11 @@ Perform a pairwise comparison of `property` on the `jobs`.
 compare(jobs, property) = map(J -> property(J...), Iterators.product(jobs, jobs))
 
 
-
 function instance_to_lb_solution(instance)
     Ω = jobs(instance)
     Q = cranes(instance)
-    L = jobs_by_loc(Ω)    
-    jd = _jobdata(L)
+    jobs_by_L = jobs_by_loc(Ω)    
+    jd = _jobdata(jobs_by_L)
     qd = _cranedata(Q)
     @show jd
     @show qd
@@ -76,6 +75,12 @@ function loctojobdict(jobs)
     return D
 end
 
+"""
+    _jobdata(L)
+
+Given a dictionary with entries l => Vector(Job), calculate the minimal completion time for each job, based on the precendence constraints and arrival times of the jobs.
+
+"""
 function _jobdata(L)
     jd = Tuple{Int,Int}[]
     for l in L
@@ -102,4 +107,40 @@ function lb_obj(jobs, jd)
         end
     end
     return cmax, twt
+end
+    
+    
+function earliest_start_times(jobs)
+    D = loctojobdict(jobs)
+    t_start = zeros(Int,length(jobs))
+    for (l, ljobs) in pairs(D)
+        if length(ljobs) > 1
+            tl = 0
+            for j in ljobs
+                t_start[j.id] = max(tl, t_arrival(j))
+                tl = t_start[j.id] + t_processing(j)
+            end
+        else
+            j = ljobs[1]
+            t_start[j.id] = t_arrival(j)
+        end
+        
+    end
+    return t_start
+end
+
+    
+"""
+    assignment_ranges(Ω, Q)
+
+Return a vector of ranges designating which craens can be assigned to each job.
+"""
+function assignment_ranges(Ω, Q)
+    R = UnitRange{Int}[]
+    for j in Ω
+        cmin = findfirst( c -> loc(j) ∈ zone(c), Q)
+        cmax = findlast( c -> loc(j) ∈ zone(c), Q)
+        push!(R, cmin:cmax)
+    end
+    return RDev
 end

@@ -2,7 +2,7 @@
     struct Trajectory
 
 Representation of a single crane trajectory as part of as solution to the GCSPET. The crane movements are modeled as a sequence of crane-positions through time. 
-Positions relevant to the execution of a job are marked with the idea of that particular job. Each job-id thus occurs twice: once for the starting point of the job and once more for finishing.
+Positions relevant to the execution of a job are marked with the id of that particular job. Each job-id thus occurs twice: once for the starting point of the job and once more for finishing.
 """
 struct Trajectory
     id::Int
@@ -13,12 +13,12 @@ end
 
 id(t::Trajectory) = t.id
 
-jobset(t::Trajectory) = unique(filter( x -> x > 0, t.J))
+jobset(t::Trajectory) = unique(filter( x -> x >= 0, t.J))
 
 function starttimes(t::Trajectory)
     d = Dict{Int,Int}()
     for j in jobset(t)
-        idx = findfirst(j, t.J)
+        idx = findfirst(x -> x == j, t.J)
         d[j] = t.T[idx]
     end
     return d
@@ -26,7 +26,7 @@ end
 
 function endtimes(t::Trajectory)
     for j in jobset(t)
-        idx = findlast(j, t.J)
+        idx = findlast(x -> x == j, t.J)
         d[j] = t.T[idx]        
     end
     return d
@@ -107,8 +107,9 @@ end
     cmax = makespan(s)
     twt = truckwaitingtime(s)
     println(io, "GCSPET-solution: $(name(s))")
-    println(io, "njobs: $njobs, ncranes: $ncranes")
-    println(io, "CMAX: $cmax, TWT: $twt")
+    println(io, "Number of jobs: $njobs")
+    println(io, "Number of cranes: $ncranes")
+    println(io, "Objective: $(cmax+twt) (makespan: $cmax, TWT: $twt)")
     println(io, "--------------")
     for t in trajectories(s)
         println(io, t)

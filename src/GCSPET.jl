@@ -41,12 +41,14 @@ module GCSPET
             generate_instance,
             precedence_graph,
             precedence_matrix,
-            assignment_matrix
+            assignment_matrix,
+            assignment_ranges
 
     using Reexport
     using SplitApplyCombine: group # model
     @reexport using LightGraphs       # model
     using DataDeps          # io
+    using RecipesBase
     using Luxor             # visualization
     using Colors            # visualization
     using Test              # validation
@@ -57,17 +59,18 @@ module GCSPET
     include("model/solution.jl")
     include("model/bounds.jl")
     include("model/utilities.jl")
-
     include("io/utilities.jl")
     include("io/dependencies.jl")
     include("io/io.jl")
     include("io/generator.jl")
     
     include("visualization/base.jl")
+    include("visualization/gcspetsolution.jl")
+    include("visualization/gcspetinstance.jl")
+    include("visualization/gcspetobjective.jl")
+    include("formulation/guo_formulation.jl")
 
     function __init__()
-        register(guo_instances)
+        DataDeps.register(guo_instances)
     end
-
-
 end
