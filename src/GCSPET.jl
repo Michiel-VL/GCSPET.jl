@@ -67,7 +67,7 @@ module GCSPET
     include("visualization/base.jl")
     include("visualization/gcspetsolution.jl")
     include("visualization/gcspetinstance.jl")
-
+    include("visualization/gcspetobjective.jl")
     include("formulation/guo_formulation.jl")
 
     function __init__()
