@@ -27,6 +27,7 @@ module GCSPET
             zone,
             safety,
             Instance,           # Instance
+            Solution,
             name,
             jobs,
             cranes,
@@ -59,10 +60,11 @@ module GCSPET
     include("model/solution.jl")
     include("model/bounds.jl")
     include("model/utilities.jl")
+    include("model/generator.jl")
     include("io/utilities.jl")
     include("io/dependencies.jl")
     include("io/io.jl")
-    include("io/generator.jl")
+    
     
     include("visualization/base.jl")
     include("visualization/gcspetsolution.jl")
