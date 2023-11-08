@@ -76,7 +76,7 @@ end
 """
     GCSPET.write(solution::Solution, fpath; zeroindexed = false)
 
-Write a solution of GCSPET to `fpath`. Zero-based indexing can be chosen through keyword `zeroindexed`.
+Write a solution of GCSPET to `fpath`. Zero-based indexing for the jobs can be chosen through keyword `zeroindexed`.
 """
 function write(solution::Solution, fpath, zeroindexed = false)
     open(fpath, "w") do io

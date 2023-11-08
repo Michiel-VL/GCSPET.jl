@@ -1,5 +1,7 @@
 using LaTeXStrings
 
+export gcspetinstance
+
 @userplot GCSPETInstance
 
 
