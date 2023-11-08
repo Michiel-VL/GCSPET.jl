@@ -7,7 +7,7 @@ Guo, Peng, et al. "Gantry crane scheduling in intermodal rail-road container ter
 """
 module GCSPET
 
-    export  Job,                # Job
+    export  Job,
             id,
             loc,
             t_arrival,
@@ -21,12 +21,12 @@ module GCSPET
             isunload,
             t_waiting,
             t_truckwaiting,
-            Crane,              # Crane
+            Crane,
             speed,
             starting_position,
             zone,
             safety,
-            Instance,           # Instance
+            Instance,
             Solution,
             name,
             jobs,
@@ -46,13 +46,12 @@ module GCSPET
             assignment_ranges
 
     using Reexport
-    using SplitApplyCombine: group # model
-    @reexport using LightGraphs       # model
-    using DataDeps          # io
+    using SplitApplyCombine: group
+    @reexport using LightGraphs
     using RecipesBase
-    using Luxor             # visualization
-    using Colors            # visualization
-    using Test              # validation
+    using Luxor
+    using Colors
+    using Test
 
     include("model/job.jl")
     include("model/crane.jl")
@@ -65,12 +64,9 @@ module GCSPET
     include("io/dependencies.jl")
     include("io/io.jl")
     
-    
-    include("visualization/base.jl")
     include("visualization/gcspetsolution.jl")
-    include("visualization/gcspetinstance.jl")
-    include("visualization/gcspetobjective.jl")
-    include("formulation/guo_formulation.jl")
+    include("visualization/gcspetinstance.jl") # needs some rework
+    include("visualization/gcspetobjective.jl") # not working yet
 
     function __init__()
         DataDeps.register(guo_instances)
