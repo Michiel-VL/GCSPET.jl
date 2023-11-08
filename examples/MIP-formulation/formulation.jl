@@ -1,5 +1,5 @@
-@reexport using JuMP
-using Gurobi, Cbc
+using JuMP
+using Cbc
 
 export build_model, solve_instance
 
@@ -112,7 +112,7 @@ end
 # Utility functions
 
 
-function solve_instance(instance; optimizer= Gurobi.Optimizer, δ=1)
+function solve_instance(instance; optimizer = Cbc.Optimizer, δ=1)
     m = build_model(instance)
     set_optimizer(m, optimizer)
     #set_silent(m)
@@ -120,7 +120,11 @@ function solve_instance(instance; optimizer= Gurobi.Optimizer, δ=1)
     return extract_solution(m,instance)
 end
 
+"""
+    extract_solution(model, instance)
 
+Extract the solution from the solver and return it as a GCSPET.Solution.
+"""
 function extract_solution(model, instance)
     # Extract the assignment matrix (:x) from the model and round and convert all values to the nearest integer
     assignment_matrix = Int.(round.(Matrix(value.(model[:x]))))
