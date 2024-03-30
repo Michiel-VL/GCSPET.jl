@@ -48,6 +48,7 @@ module GCSPET
     using Reexport
     using SplitApplyCombine: group
     @reexport using LightGraphs
+    using DataDeps
     using RecipesBase
     using Luxor
     using Colors
