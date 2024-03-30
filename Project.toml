@@ -1,7 +1,7 @@
 name = "GCSPET"
 uuid = "aa2bebe3-20f9-44dc-ba30-5cf3a5b89d1f"
 authors = ["Michiel Van Lancker <michiel.vanlancker@cs.kuleuven.be> and contributors"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 Cbc = "9961bab8-2fa3-5c5a-9d89-47fab24efd76"
